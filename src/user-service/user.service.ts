@@ -63,7 +63,7 @@ export class UserService {
 
             return { token };
         } else {
-            throw new HttpException(`autentification faild`, HttpStatus.UNAUTHORIZED);
+            throw new HttpException(`authentication failed`, HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -74,7 +74,7 @@ export class UserService {
 
             return true;
         } else {
-            throw new HttpException(`autentification faild`, HttpStatus.UNAUTHORIZED);
+            throw new HttpException(`authentication failed`, HttpStatus.UNAUTHORIZED);
         }
     }
 
