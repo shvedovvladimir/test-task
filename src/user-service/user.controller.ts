@@ -1,9 +1,10 @@
-import { Controller, Get, Dependencies, Post, Body, UsePipes } from '@nestjs/common';
+import { Controller, Get, Dependencies, Post, Body, UsePipes, Headers, HttpCode } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDto } from './Dto/userDto';
 import { ValidationPipe } from 'src/common/validation.pipe';
 import { IUser } from './interfaces/user.interface';
 import { UserLoginDto } from './Dto/userLoginDto';
+import { LoginResponse } from './interfaces/loginResponse.interface';
 
 @Controller('/user')
 @Dependencies(UserService)
@@ -22,7 +23,15 @@ export class UserController {
   }
 
   @Post('/login')
-  public async login(@Body() userLoginInfo: UserLoginDto): Promise<any> {
+  public async login(@Body() userLoginInfo: UserLoginDto): Promise<LoginResponse> {
     return this.userService.login(userLoginInfo);
+  }
+
+  @Get('logout')
+  @HttpCode(204)
+  public async logout(@Headers() headers: any): Promise<boolean> {
+    const result = await this.userService.logout(headers.authorization);
+
+    return result;
   }
 }
