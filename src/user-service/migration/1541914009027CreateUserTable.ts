@@ -9,7 +9,9 @@ export class CreateUserTable1541914009027 implements MigrationInterface {
                 "password" varchar(255) not null,
                 "deleteTime" timestamp with time zone,
                 "createTime" timestamp with time zone not null DEFAULT NOW(),
-                "updateTime" timestamp with time zone not null DEFAULT NOW()
+                "updateTime" timestamp with time zone not null DEFAULT NOW(),
+
+                UNIQUE("login")
             )`,
     );
   }
