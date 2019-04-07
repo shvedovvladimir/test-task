@@ -15,7 +15,7 @@ export class UserModule {
     consumer
       .apply(AuthenticationMiddleware)
       .exclude(
-        { path: 'user/login', method: RequestMethod.POST },
+        { path: 'users/login', method: RequestMethod.POST },
       )
       .forRoutes(UserController);
   }

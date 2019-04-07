@@ -7,7 +7,7 @@ import { UserLoginDto } from './Dto/userLoginDto';
 import { LoginResponse } from './interfaces/loginResponse.interface';
 import { GetUsersResponse } from './interfaces/getUsersResponse';
 
-@Controller('/user')
+@Controller('/users')
 @Dependencies(UserService)
 export class UserController {
   constructor(private readonly userService: UserService) {}
