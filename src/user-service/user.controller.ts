@@ -5,6 +5,7 @@ import { ValidationPipe } from 'src/common/validation.pipe';
 import { IUser } from './interfaces/user.interface';
 import { UserLoginDto } from './Dto/userLoginDto';
 import { LoginResponse } from './interfaces/loginResponse.interface';
+import { GetUsersResponse } from './interfaces/getUsersResponse';
 
 @Controller('/user')
 @Dependencies(UserService)
@@ -12,8 +13,11 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  public async getUsers(): Promise<IUser[]> {
-    return this.userService.getAll();
+  public async getUsers(): Promise<GetUsersResponse> {
+    const users = await this.userService.getAll();
+    return {
+      users,
+    };
   }
 
   @Post()

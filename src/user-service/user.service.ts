@@ -52,6 +52,9 @@ export class UserService {
 
     public async login(userLoginInfo: UserLoginDto): Promise<LoginResponse> {
         const user = await this.userRepository.findOne({login: userLoginInfo.login});
+        if (!user) {
+            throw new HttpException(`user not found`, HttpStatus.NOT_FOUND);
+        }
         const isMatch = bcrypt.compareSync(userLoginInfo.password, user.password);
         if (isMatch) {
             delete user.password;
