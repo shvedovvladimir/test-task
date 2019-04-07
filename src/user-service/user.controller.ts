@@ -3,6 +3,7 @@ import { UserService } from './user.service';
 import { UserDto } from './Dto/userDto';
 import { ValidationPipe } from 'src/common/validation.pipe';
 import { IUser } from './interfaces/user.interface';
+import { UserLoginDto } from './Dto/userLoginDto';
 
 @Controller('/user')
 @Dependencies(UserService)
@@ -18,5 +19,10 @@ export class UserController {
   @UsePipes(new ValidationPipe())
   public async createUser(@Body() user: UserDto): Promise<IUser> {
     return this.userService.create(user);
+  }
+
+  @Post('/login')
+  public async login(@Body() userLoginInfo: UserLoginDto): Promise<any> {
+    return this.userService.login(userLoginInfo);
   }
 }
