@@ -6,7 +6,10 @@ import { IUser } from './interfaces/user.interface';
 import { UserLoginDto } from './Dto/userLoginDto';
 import { LoginResponse } from './interfaces/loginResponse.interface';
 import { GetUsersResponse } from './interfaces/getUsersResponse';
+import { ApiBearerAuth, ApiUseTags } from '@nestjs/swagger';
 
+@ApiUseTags('/users')
+@ApiBearerAuth()
 @Controller('/users')
 @Dependencies(UserService)
 export class UserController {
@@ -31,9 +34,9 @@ export class UserController {
     return this.userService.login(userLoginInfo);
   }
 
-  @Get('logout')
+  @Get('/logout')
   @HttpCode(204)
-  public async logout(@Headers() headers: any): Promise<boolean> {
+  public async logout(@Headers() headers: any): Promise<any> {
     const result = await this.userService.logout(headers.authorization);
 
     return result;
