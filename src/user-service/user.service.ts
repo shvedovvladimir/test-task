@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entity/user';
@@ -27,9 +27,13 @@ export class UserService {
     public async create(userDto: UserDto): Promise<IUser> {
         const user = new User();
         Object.assign(user, userDto);
-        const resp = await this.userRepository.save(user);
-        delete resp.password;
+        try {
+            const resp = await this.userRepository.save(user);
+            delete resp.password;
 
-        return resp as IUser;
+            return resp as IUser;
+        } catch (error) {
+            throw new HttpException(`save error: ${error.detail}`, HttpStatus.BAD_REQUEST);
+        }
     }
 }
